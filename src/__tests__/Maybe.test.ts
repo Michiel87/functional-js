@@ -1,6 +1,23 @@
+import { setoid } from '../FantasyLandSpec'
 import { Maybe } from '../Maybe'
 
 describe('Maybe', () => {
+  describe('setoid laws', () => {
+    const laws = setoid(Maybe)
+    
+    it('should respect reflexivity', () => {
+      expect(laws.reflexivity(10)).toBeTruthy()
+    })
+
+    it('should respect symmetry/commutativity ', () => {
+      expect(laws.symmetry(10, 10)).toBeTruthy()
+    })
+
+    it('should respect transitivity', () => {
+      expect(laws.transitivity(10, 10, 10)).toBeTruthy()
+    })
+  })
+
   describe('monad laws', () => {
     it('should respect left identity law', () => {
       const double = (x: number) => x * 2
@@ -21,35 +38,12 @@ describe('Maybe', () => {
     })
   })
 
-  describe('setoid laws', () => {
-    it('should respect reflexivity', () => {
-      const a = 10
-      expect(Maybe(a).equals(a)).toBeTruthy()
-    })
 
-    it('should respect symmetry/commutativity ', () => {
-      const a = 10
-      const b = 10
-      expect(Maybe(a).equals(b)).toBeTruthy()
-      expect(Maybe(b).equals(a)).toBeTruthy()
-    })
+  // it('should protect against empty values', () => {
+  //   const double = (x: number) => x * 2
 
-    it('should respect transitivity', () => {
-      const a = 10
-      const b = 10
-      const c = 10
-      expect(Maybe(a).equals(b)).toBeTruthy()
-      expect(Maybe(b).equals(c)).toBeTruthy()
-      expect(Maybe(a).equals(c)).toBeTruthy()
-    })
-  })
-
-
-  it('should protect against empty values', () => {
-    const double = (x: number) => x * 2
-
-    expect(Maybe(10).map(double).chain(x => x)).toBe(20)
-    expect(Maybe(null).map(double).chain(x => x)).toBeNull()
-    expect(Maybe(undefined).map(double).chain(x => x)).toBeNull()
-  })
+  //   expect(Maybe(10).map(double).chain(x => x)).toBe(20)
+  //   expect(Maybe(null).map(double).chain(x => x)).toBeNull()
+  //   expect(Maybe(undefined).map(double).chain(x => x)).toBeNull()
+  // })
 })

@@ -9,7 +9,11 @@ interface Maybe<A> extends Apply<A>, Monad<A>, Setoid<A> {
 export const Maybe = <A>(value: A): Maybe<A> => ({
   isNothing: () => value === undefined || value === null,
 
-  equals: (a: A) => value === a,
+  ['fantasy-land/equals']: (a: A) => value === a,
+  
+  equals (a: A) {
+    return this['fantasy-land/equals'](a)
+  },
 
   notEquals: (a: A) => value !== a,
 

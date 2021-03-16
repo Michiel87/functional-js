@@ -1,7 +1,5 @@
 import { curry } from "./curry"
 
-import { curry } from './curry'
-
 export function concat<A> (groupA: A[], groupB: A[]): A[]
 export function concat<A> (groupA: A[]): (groupB: A[]) => A[]
 
